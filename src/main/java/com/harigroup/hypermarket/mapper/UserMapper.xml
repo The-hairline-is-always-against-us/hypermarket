@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harigroup.hypermarket.mapper.IUserMapper">
+
+	<resultMap id="UserFull" type="com.harigroup.hypermarket.pojo.User">
+        <id property="u_id" column="u_id" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="ur_id" column="ur_id" />
+		<result property="ban" column="ban" />
+		<result property="del_flag" column="del_flag" />
+		<association property="role" javaType="com.harigroup.hypermarket.pojo.Role">
+            <id property="ur_id" column="ur_id"/>
+            <result property="role" column="role"/>
+            <result property="permission" column="permission"/>
+        </association>
+    </resultMap>
+
+	<select id="login" resultMap="UserFull">
+		select *
+		from user as u left join u_role as ur
+		on u.ur_id = ur.ur_id
+		where username = #{username} and password = #{password}
+	</select>
+
+</mapper>

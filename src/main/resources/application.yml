@@ -10,7 +10,7 @@ spring:
     password: HairLine
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
-    database: 0
+    database: 2
     host: 182.92.208.18
     port: 6379
     password: Wuyue88@

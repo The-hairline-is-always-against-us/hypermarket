@@ -47,9 +47,10 @@ public final class JWTUtil {
      * @param id         用户id
      * @param role       用户身份
      * @param permission 用户身份对应权限
+     * @param roleJSON	 role实体类JSON字符串
      * @return 加密的token
      */
-    public static String createToken(String username, String id, String role, String permission) {
+    public static String createToken(String username, String id, String role, String permission,String roleJSON) {
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         Algorithm algorithm = Algorithm.HMAC256(SECRET);
         // 附带username&id信息
@@ -58,6 +59,7 @@ public final class JWTUtil {
                 .withClaim("id", id)
                 .withClaim("role", role)
                 .withClaim("permission", permission)
+                .withClaim("roleJSON", roleJSON)
                 //到期时间
                 .withExpiresAt(date)
                 //创建一个新的JWT，并使用给定的算法进行标记
@@ -128,6 +130,20 @@ public final class JWTUtil {
         }
     }
 
+    /**
+     * 获得token中的信息，无需secret解密也能获得
+     *
+     * @return token中包含的用户roleJSON
+     */
+    public static String getRoleJSON(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("roleJSON").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+    
     /**
      * 获得token中的信息，无需secret解密也能获得
      *
