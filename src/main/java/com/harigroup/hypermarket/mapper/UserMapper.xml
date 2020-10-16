@@ -33,5 +33,11 @@
 	<insert id="register" parameterType="com.harigroup.hypermarket.pojo.User">
 	
 	</insert>
+	
+	<select id="validateUsername" resultType="Integer">
+		select count(*)
+		from tb_user as u
+		where u.username = #{username}
+	</select>
 
 </mapper>
