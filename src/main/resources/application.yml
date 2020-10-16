@@ -36,6 +36,6 @@ mybatis-plus:
       field-strategy: NOT_EMPTY
       db-type: MYSQL
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
     call-setters-on-nulls: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
