@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harigroup.hypermarket.mapper.IGoodsMapper">
+
+<select id="getGoods" resultType="com.harigroup.hypermarket.pojo.Goods">
+	select * 
+	from tb_goods 
+</select>
+<select id="getGoodsByGid" resultType="com.harigroup.hypermarket.pojo.Goods">
+	select * 
+	from tb_goods where g_id=#{g_id}
+</select>
+<select id="getGoodsByGname" resultType="com.harigroup.hypermarket.pojo.Goods">
+	select * 
+	from tb_goods where g_name like "%"#{g_name}"%"
+</select>
+<select id="getGoodsByTName" resultType="com.harigroup.hypermarket.pojo.Goods">
+	SELECT g_name,g_intro,g_price,g_total,uptime,downtime,g_status,t_name,g_picture
+	FROM `tb_goods` as g,tb_type as t
+	where g.t_id=t.t_id and t.t_name=#{t_name}
+</select>
+<insert id="insertGoods">
+
+</insert>
+<delete id="deleteGoods"></delete>
+</mapper>

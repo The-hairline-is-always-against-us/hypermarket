@@ -68,7 +68,9 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping("/getInfPermiss")
-	public ResultMap getInfPermiss(@RequestHeader String token) {
-		return null;
+	public ResultMap getInfPermiss(@RequestHeader("token") String token) {
+		Integer userID = JWTUtil.getUserID(token);
+		System.out.println(123);
+		return resultMap.success().message(userID);
 	}
 }

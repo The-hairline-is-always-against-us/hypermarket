@@ -2,6 +2,7 @@ package com.harigroup.hypermarket.pojo;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
@@ -37,4 +38,6 @@ public class Goods {
 	private Integer g_status;
 	//商品图片
 	private String g_picture;
+	@TableField(exist = false)
+	private String t_name;
 }
