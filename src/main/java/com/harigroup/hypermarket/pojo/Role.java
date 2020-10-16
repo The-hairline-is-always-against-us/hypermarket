@@ -11,7 +11,7 @@ import lombok.Data;
  *
  */
 @Data
-@TableName("u_role")
+@TableName("tb_u_role")
 public class Role {
 	//权限表主键
 	private Integer ur_id;

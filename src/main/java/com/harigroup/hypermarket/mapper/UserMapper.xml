@@ -21,7 +21,7 @@
 
 	<select id="login" resultMap="UserFull">
 		select *
-		from user as u left join u_role as ur
+		from tb_user as u left join tb_u_role as ur
 		on u.ur_id = ur.ur_id
 		where username = #{username} and password = #{password}
 	</select>

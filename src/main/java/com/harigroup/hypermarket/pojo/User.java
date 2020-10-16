@@ -12,7 +12,7 @@ import lombok.Data;
  *
  */
 @Data
-@TableName("user")
+@TableName("tb_user")
 public class User {
 	//用户表主键
 	private Integer u_id;
