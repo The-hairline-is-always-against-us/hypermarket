@@ -26,4 +26,34 @@ public class UserServiceImpl implements IUserService {
 		return userMapper.login(username, password);
 	}
 
+	@Override
+	public User getInfForPermiss(String u_id) {
+		// TODO Auto-generated method stub
+		return userMapper.getInfForPermiss(u_id);
+	}
+
+	@Override
+	public Integer register(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.register(user);
+	}
+
+	@Override
+	public Integer validateUsername(String username) {
+		// TODO Auto-generated method stub
+		return userMapper.validateUsername(username);
+	}
+
+	@Override
+	public Integer validateEmail(String email) {
+		// TODO Auto-generated method stub
+		return userMapper.validateEmail(email);
+	}
+
+	@Override
+	public Integer validatePhone(String phone) {
+		// TODO Auto-generated method stub
+		return userMapper.validatePhone(phone);
+	}
+
 }

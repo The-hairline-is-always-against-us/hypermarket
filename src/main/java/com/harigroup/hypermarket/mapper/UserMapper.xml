@@ -25,5 +25,13 @@
 		on u.ur_id = ur.ur_id
 		where username = #{username} and password = #{password}
 	</select>
+	
+	<select id="getInfForPermiss" resultMap="UserFull">
+		
+	</select>
+	
+	<insert id="register" parameterType="com.harigroup.hypermarket.pojo.User">
+	
+	</insert>
 
 </mapper>

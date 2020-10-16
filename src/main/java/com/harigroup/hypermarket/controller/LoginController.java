@@ -3,6 +3,7 @@ package com.harigroup.hypermarket.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,7 +41,7 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping("/login")
-	public ResultMap test(@RequestParam("username") String username, @RequestParam("password") String password) {
+	public ResultMap login(@RequestParam("username") String username, @RequestParam("password") String password) {
 
 		User user = userService.login(username, password);
 
@@ -58,5 +59,16 @@ public class LoginController {
 		} else {
 			return resultMap.fail().message("请输入正确的用户名或密码");
 		}
+	}
+	
+	/**
+	 * 授权信息获取接口，用于前端后台的身份认证
+	 * 
+	 * @param token 凭证
+	 * @return
+	 */
+	@PostMapping("/getInfPermiss")
+	public ResultMap getInfPermiss(@RequestHeader("token") String token) {
+		return null;
 	}
 }
