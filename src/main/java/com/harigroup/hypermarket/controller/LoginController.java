@@ -68,7 +68,7 @@ public class LoginController {
 	 * @return
 	 */
 	@PostMapping("/getInfPermiss")
-	public ResultMap getInfPermiss(@RequestHeader("token") String token) {
+	public ResultMap getInfPermiss(@RequestHeader String token) {
 		return null;
 	}
 }

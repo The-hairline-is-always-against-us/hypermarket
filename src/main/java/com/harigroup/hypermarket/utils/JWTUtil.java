@@ -110,7 +110,7 @@ public final class JWTUtil {
     public static Integer getUserID(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("id").asInt();
+            return Integer.parseInt(jwt.getClaim("id").asString());
         } catch (JWTDecodeException e) {
             return null;
         }
