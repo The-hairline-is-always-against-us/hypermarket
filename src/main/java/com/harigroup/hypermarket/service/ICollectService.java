@@ -1,6 +1,9 @@
 package com.harigroup.hypermarket.service;
 
+import java.util.List;
+
 import com.harigroup.hypermarket.pojo.Collect;
+import com.harigroup.hypermarket.pojo.Goods;
 
 public interface ICollectService {
 	
@@ -18,5 +21,18 @@ public interface ICollectService {
 	 * @return 
 	 */
 	Integer validatecollectGoods(Integer g_id);
-
+	
+	/**
+	 * 根据用户id展示收藏的商品
+	 * @param u_id
+	 * @return
+	 */
+	List<Goods> showcollectGoods(int u_id);
+	
+	/**
+	 * 删除收藏的商品
+	 * @param g_id
+	 * @return
+	 */
+	Integer deleteCollectGoods(Integer g_id);
 }

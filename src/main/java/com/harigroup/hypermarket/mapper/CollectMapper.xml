@@ -4,6 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.harigroup.hypermarket.mapper.ICollectMapper">
+	
+	<!-- 收藏商品 -->
 	<insert id="collection"
 		parameterType="com.harigroup.hypermarket.pojo.Collect">
 		insert
@@ -11,13 +13,29 @@
 		values(default,#{u_id},#{g_id})
 	</insert>
 
+	<!-- 判断商品是否已经存在于收藏列表中 -->
 	<select id="validatecollectGoods" resultType="Integer">
 		select count(*)
 		from
 		tb_collect as c
 		where c.g_id = #{g_id}
 	</select>
-
+	
+	<!-- 展示收藏 -->
+	<select id="showcollectGoods" resultType="com.harigroup.hypermarket.pojo.Goods">
+		select g.* 
+		from tb_collect c,tb_goods g 
+		where c.u_id=#{u_id} and c.g_id=g.g_id
+	</select>
+	
+	<!-- 删除收藏中的商品 -->
+	<delete id="deleteCollectGoods" >
+		delete 
+		from tb_collect 
+		where g_id = #{g_id} and u_id=#{u_id}
+	</delete>
+	
+	
 
 
 </mapper>

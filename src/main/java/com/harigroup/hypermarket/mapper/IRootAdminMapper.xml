@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harigroup.hypermarket.mapper.IRootAdminMapper">
+
+	<resultMap id="UserFull" type="com.harigroup.hypermarket.pojo.User">
+        <id property="u_id" column="u_id" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="ur_id" column="ur_id" />
+		<result property="ban" column="ban" />
+		<result property="del_flag" column="del_flag" />
+		<association property="role" javaType="com.harigroup.hypermarket.pojo.Role">
+            <id property="ur_id" column="ur_id"/>
+            <result property="role" column="role"/>
+            <result property="permission" column="permission"/>
+        </association>
+    </resultMap>
+	
+	<select id="getAllUser" resultMap="UserFull">
+		select *
+		from tb_user as u left join tb_u_role as ur
+		on u.ur_id = ur.ur_id
+	</select>
+	
+	<select id="getClassifyUser" resultType="com.harigroup.hypermarket.pojo.User">
+		select *
+		from tb_user
+		where ur_id in (select ur_id from tb_u_role where role = #{calssify})
+	</select>
+	
+	<update id="deleteUser">
+		update tb_user
+		set del_flag = 1
+		where username = #{username}
+	</update>
+	
+	<update id="changeRole">
+		update tb_user
+		set ur_id = (select ur_id from tb_u_role where role = #{role})
+		where username = #{username}
+	</update>
+	
+	<update id="unDeleteUser">
+		update tb_user
+		set del_flag = 0
+		where username = #{username}
+	</update>
+	
+</mapper>
