@@ -49,4 +49,11 @@ public interface IRootAdminService {
 	 * @return 受影响的行数
 	 */
 	Integer unDeleteUser(String username);
+	
+	/**
+	 * 获取Admin用户对应的管理用户的权限列表
+	 * 
+	 * @return 用户List集合
+	 */
+	List<User> getAdminUserList();
 }

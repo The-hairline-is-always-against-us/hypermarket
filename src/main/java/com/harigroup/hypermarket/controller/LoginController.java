@@ -57,7 +57,7 @@ public class LoginController {
 
 			redisUtil.set(user.getUsername(), newToken, 60 * 60 * 24);
 
-			return resultMap.success().message(newToken);
+			return resultMap.success().message(newToken).addElement("user", user);
 		} else {
 			return resultMap.fail().message("请输入正确的用户名或密码");
 		}

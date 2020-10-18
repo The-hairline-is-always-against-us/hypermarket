@@ -51,4 +51,10 @@ public class RootAdminServiceImpl implements IRootAdminService {
 		return rootMapper.unDeleteUser(username);
 	}
 
+	@Override
+	public List<User> getAdminUserList() {
+		// TODO Auto-generated method stub
+		return rootMapper.getAdminUserList();
+	}
+
 }

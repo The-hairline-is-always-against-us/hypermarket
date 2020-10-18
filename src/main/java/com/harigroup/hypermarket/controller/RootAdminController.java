@@ -79,5 +79,10 @@ public class RootAdminController {
 	public ResultMap changeRole(@RequestParam("username") String username, @RequestParam("role") String role) {
 		return resultMap.success().message(rootService.changeRole(username, role));
 	}
+	
+	@GetMapping("/getAdminUserList")
+	public ResultMap getAdminUserList() {
+		return resultMap.success().message(rootService.getAdminUserList());
+	}
 
 }

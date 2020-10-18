@@ -49,4 +49,10 @@
 		where username = #{username}
 	</update>
 	
+	<select id="getAdminUserList" resultMap="UserFull">
+		select *
+		from tb_user as u left join tb_u_role as ur
+		on u.ur_id = ur.ur_id
+	</select>
+	
 </mapper>
