@@ -1,10 +1,12 @@
 package com.harigroup.hypermarket.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -67,10 +69,11 @@ public class LoginController {
 	 * @param token 凭证
 	 * @return
 	 */
-	@PostMapping("/getInfPermiss")
+	@GetMapping("/getInfPermiss")
 	public ResultMap getInfPermiss(@RequestHeader("token") String token) {
-		Integer userID = JWTUtil.getUserID(token);
-		System.out.println(123);
-		return resultMap.success().message(userID);
+		Map<String, String> map = new HashMap<>();
+		map.put("username", JWTUtil.getUsername(token));
+		map.put("role", JWTUtil.getUserRole(token));
+		return resultMap.success().message(map);
 	}
 }

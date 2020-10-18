@@ -22,7 +22,42 @@
 	where g.t_id=t.t_id and t.t_name=#{t_name}
 </select>
 <insert id="insertGoods">
-
+	insert into tb_goods values(default,#{t_id},#{s_id},#{g_name},#{g_intro},#{g_price},#{g_total},
+	<if test="uptime !=null">#{uptime},</if><if test="uptime ==null">now(),</if>
+	default,default,#{g_picture})
 </insert>
-<delete id="deleteGoods"></delete>
+<update id="deleteGoodsByGid">
+	update tb_goods set g_status=0,downtime=now() where g_id=#{g_id}
+</update>
+<delete id="deleteGoods">
+	delete from goods where g_id=#{g_id}
+</delete>
+<select id="getType" resultType="com.harigroup.hypermarket.pojo.Type">
+	select * 
+	from tb_type
+</select>
+
+<select id="getGoodsBySID"
+		resultType="com.harigroup.hypermarket.pojo.Goods">
+		select * from tb_goods
+		where s_id = #{s_id}
+	</select>
+	<update id="updateGoods">
+		update tb_goods
+		set t_id = #{t_id},g_name = #{g_name},g_intro = #{g_intro},g_price =
+		#{g_price},
+		g_total=#{g_total},g_picture=#{g_picture}
+		where g_id=#{g_id}
+	</update>
+	<insert id="upGoods">
+		insert into tb_goods
+		values (default,#{t_id},#{s_id},#{g_name},#{g_intro},#{g_price},
+		#{g_total},NOW(),null,1,#{g_picture})
+	</insert>
+	<update id="downGoods">
+		update tb_goods
+		set downtime = NOW(),g_status=0
+		where g_id=#{g_id}
+	</update>
+
 </mapper>

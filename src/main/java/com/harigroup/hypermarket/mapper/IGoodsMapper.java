@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harigroup.hypermarket.pojo.Goods;
+import com.harigroup.hypermarket.pojo.Type;
 
 public interface IGoodsMapper extends BaseMapper<Goods>{
 	
@@ -56,6 +57,50 @@ public interface IGoodsMapper extends BaseMapper<Goods>{
 	 * 		<=0：删除失败
 	 */
 	Integer deleteGoods(Integer g_id);
+	/**
+	 * 获取所有商品类型
+	 * @param t_id
+	 * @return
+	 */
+	List<Type> getType();
+	
+	/**
+	 * 卖家删除商品
+	 * （将可售卖的商品下架）
+	 * @param g_id
+	 * @return
+	 */
+	Integer deleteGoodsByGid(Integer g_id);
+	
+	/**
+	 * 通过商铺ID查询本商铺商品的DAO接口
+	 * @param s_id
+	 * @return
+	 */
+	List<Goods> getGoodsBySID(Integer s_id);
+	
+	/**
+	 * 修改商品信息（商家）
+	 * @param goods
+	 * @return
+	 */
+	Integer updateGoods(Goods goods);
+	
+	
+	/**
+	 * 上架商品
+	 * @param goods
+	 * @return
+	 */
+	Integer upGoods(Goods goods);
+	
+	/**
+	 * 下架商品
+	 * @param g_id
+	 * @return
+	 */
+	Integer downGoods(Integer g_id);
+	
 	
 	
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harigroup.hypermarket.mapper.IStoreMapper">
+
+<select id="getStoreBySid" resultType="com.harigroup.hypermarket.pojo.Store">
+  select * from tb_store where s_id=#{s_id}
+</select>
+<select id="getStoreByUid" resultType="com.harigroup.hypermarket.pojo.Store">
+  select * from tb_store where u_id=#{u_id}
+</select>
+<select id="salesCount" resultType="Integer">
+	select count(*) sale_count
+	from tb_orderform o,tb_goods g
+	where  g.g_id=o.g_id and g.s_id=#{s_id}
+</select>
+
+<insert id="applyStore" parameterType="com.harigroup.hypermarket.pojo.Store">
+ insert into tb_store values(defult,#{s_name},null,#{request_time},#{s_intro},0)
+</insert>
+
+<update id="passApply" parameterType="com.harigroup.hypermarket.pojo.Store">
+ update tb_store set create_time=#{create_time},s_status=#{s_status} where s_id=#{s_id}
+</update>
+
+<delete id="deleteStore">
+ delete from tb_store where s_id=#{s_id}
+</delete>
+
+
+</mapper>
