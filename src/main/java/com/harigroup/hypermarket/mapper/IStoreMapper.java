@@ -47,5 +47,9 @@ public interface IStoreMapper extends BaseMapper<Store> {
 	 * @return
 	 */
 	Integer salesCount(Integer s_id);
+	
+	List<Store> getAllStore();
+	
+	List<Store> getAllPStore();
 
 }

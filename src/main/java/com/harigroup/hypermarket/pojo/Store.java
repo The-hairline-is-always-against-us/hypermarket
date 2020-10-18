@@ -33,4 +33,5 @@ public class Store {
 	
 	@TableField(exist = false)
 	private Integer sale_count;
+	private String username;
 }

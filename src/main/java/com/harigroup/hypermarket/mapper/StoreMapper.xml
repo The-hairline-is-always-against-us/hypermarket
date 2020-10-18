@@ -21,12 +21,24 @@
 </insert>
 
 <update id="passApply" parameterType="com.harigroup.hypermarket.pojo.Store">
- update tb_store set create_time=#{create_time},s_status=#{s_status} where s_id=#{s_id}
+ update tb_store set create_time=now(),s_status=0 where s_id=#{s_id}
 </update>
 
 <delete id="deleteStore">
  delete from tb_store where s_id=#{s_id}
 </delete>
+
+<select id="getAllStore" resultType="com.harigroup.hypermarket.pojo.Store">
+	select *
+	from tb_store as s , tb_user as u
+	where s.u_id = u.u_id
+</select>
+
+<select id="getAllPStore" resultType="com.harigroup.hypermarket.pojo.Store">
+	select *
+	from tb_store as s , tb_user as u
+	where s.u_id = u.u_id and create_time is null
+</select>
 
 
 </mapper>

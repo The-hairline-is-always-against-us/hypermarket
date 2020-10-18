@@ -48,6 +48,18 @@ public class StoreServiceImpl implements IStoreService {
 		return storeMapper.deleteStore(s_id);
 	}
 
+	@Override
+	public List<Store> getAllStore() {
+		// TODO Auto-generated method stub
+		return storeMapper.getAllStore();
+	}
+
+	@Override
+	public List<Store> getAllPStore() {
+		// TODO Auto-generated method stub
+		return storeMapper.getAllPStore();
+	}
+
 
 
 }

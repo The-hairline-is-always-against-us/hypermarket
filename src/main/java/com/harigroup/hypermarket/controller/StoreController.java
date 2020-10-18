@@ -1,6 +1,7 @@
 package com.harigroup.hypermarket.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,5 +92,15 @@ public class StoreController {
 			return resultMap.success().message("删除成功");
 		}
 		return resultMap.fail().message("删除失败");
+	}
+	
+	@GetMapping("/getAllStore")
+	public ResultMap getAllStore() {
+		return resultMap.success().message(storeService.getAllStore());
+	}
+	
+	@GetMapping("/getAllPStore")
+	public ResultMap getAllPStore() {
+		return resultMap.success().message(storeService.getAllPStore());
 	}
 }

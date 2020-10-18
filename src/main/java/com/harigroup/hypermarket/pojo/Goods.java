@@ -40,4 +40,5 @@ public class Goods {
 	private String g_picture;
 	@TableField(exist = false)
 	private String t_name;
+	private String s_name;
 }

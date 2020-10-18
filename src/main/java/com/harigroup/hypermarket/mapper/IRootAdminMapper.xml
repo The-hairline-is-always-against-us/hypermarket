@@ -53,6 +53,7 @@
 		select *
 		from tb_user as u left join tb_u_role as ur
 		on u.ur_id = ur.ur_id
+		where u.ur_id not in (4,3)
 	</select>
 	
 </mapper>

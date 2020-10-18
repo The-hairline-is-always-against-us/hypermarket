@@ -40,6 +40,8 @@ public interface IStoreService {
 	 */
 	Integer deleteStore(Integer s_id);
 
-
+	List<Store> getAllStore();
+	
+	List<Store> getAllPStore();
 
 }

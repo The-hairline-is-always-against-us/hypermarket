@@ -6,7 +6,8 @@
 
 <select id="getGoods" resultType="com.harigroup.hypermarket.pojo.Goods">
 	select * 
-	from tb_goods 
+	from tb_goods as g,tb_store as s
+	where g.s_id = s.s_id
 </select>
 <select id="getGoodsByGid" resultType="com.harigroup.hypermarket.pojo.Goods">
 	select * 
@@ -30,7 +31,7 @@
 	update tb_goods set g_status=0,downtime=now() where g_id=#{g_id}
 </update>
 <delete id="deleteGoods">
-	delete from goods where g_id=#{g_id}
+	delete from tb_goods where g_id=#{g_id}
 </delete>
 <select id="getType" resultType="com.harigroup.hypermarket.pojo.Type">
 	select * 
