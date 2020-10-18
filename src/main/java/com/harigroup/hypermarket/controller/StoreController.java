@@ -28,8 +28,9 @@ public class StoreController {
 	 * @return
 	 */
 	@PostMapping("/applyStore")
-	public ResultMap applyStore(@RequestParam("store") String s) {
+	public ResultMap applyStore(@RequestParam("store") String s,@RequestHeader String token) {
 		Store store = JSON.parseObject(s,Store.class);
+		store.setU_id(JWTUtil.getUserID(token));
 		Integer applyStore = storeService.applyStore(store);
 		if(applyStore>0) {
 			return resultMap.success().message("提交申请成功");

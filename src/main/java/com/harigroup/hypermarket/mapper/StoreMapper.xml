@@ -17,7 +17,7 @@
 </select>
 
 <insert id="applyStore" parameterType="com.harigroup.hypermarket.pojo.Store">
- insert into tb_store values(defult,#{s_name},null,#{request_time},#{s_intro},0)
+ insert into tb_store values(default,#{s_name},#{u_id},null,#{request_time},#{s_intro},0)
 </insert>
 
 <update id="passApply" parameterType="com.harigroup.hypermarket.pojo.Store">
