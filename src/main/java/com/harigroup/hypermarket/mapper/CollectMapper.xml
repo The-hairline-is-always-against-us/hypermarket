@@ -31,7 +31,7 @@
 	<!-- 删除收藏中的商品 -->
 	<delete id="deleteCollectGoods" >
 		delete 
-		from tb_collect 
+		from tb_collect
 		where g_id = #{g_id} and u_id=#{u_id}
 	</delete>
 	

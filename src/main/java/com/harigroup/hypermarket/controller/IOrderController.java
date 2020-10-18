@@ -1,6 +1,9 @@
 package com.harigroup.hypermarket.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.harigroup.hypermarket.pojo.Orderform;
 import com.harigroup.hypermarket.pojo.ResultMap;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
+import com.harigroup.hypermarket.service.IBuyCarService;
 import com.harigroup.hypermarket.service.IOrderService;
 import com.harigroup.hypermarket.utils.JWTUtil;
 
@@ -26,6 +31,8 @@ public class IOrderController {
 	private IOrderService orderService;
 	@Autowired
 	private ResultMap resultMap;
+	@Autowired
+	private IBuyCarService buyCarService;
 	
 	
 	/**
@@ -34,10 +41,13 @@ public class IOrderController {
 	 * @param u_id 用户ID
 	 * @return
 	 */
-	@PostMapping("/selectOrders")
+	@GetMapping("/selectOrders")
 	public ResultMap selectOrders(@RequestHeader String token) {
 		int u_id = JWTUtil.getUserID(token);
-		return resultMap.success().message(orderService.getAllOrder(String.valueOf(u_id)));
+		
+		List<ShoppingCar> showBCGoods = orderService.getAllOrder(String.valueOf(u_id));
+		
+		return resultMap.success().message(showBCGoods);
 	}
 
 	/**
@@ -49,11 +59,14 @@ public class IOrderController {
 	 */
 	@PostMapping("/releaseOrders")
 	public ResultMap releaseOrders(@RequestParam("order") String order,@RequestHeader String token) {
-		Orderform parseObject = JSON.parseObject(order,Orderform.class);
-		System.out.println(parseObject);
-		int u_id = JWTUtil.getUserID(token);
-		parseObject.setU_id(u_id);
-		return resultMap.success().message(orderService.releaseOrder(parseObject));
+		ShoppingCar parseObject = JSON.parseObject(order,ShoppingCar.class);
+		Orderform orderform = new Orderform();
+		orderform.setU_id(JWTUtil.getUserID(token));
+		orderform.setG_id(parseObject.getG_id());
+		orderform.setO_number(parseObject.getC_number());
+		orderform.setPrice(Double.valueOf(parseObject.getG_price()));
+		buyCarService.deleteBCGoods(JWTUtil.getUserID(token), parseObject.getG_id());
+		return resultMap.success().message(orderService.releaseOrder(orderform));
 	}
 	
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harigroup.hypermarket.pojo.Orderform;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
 
 /**
  * 订单相关的DAO层操作
@@ -19,7 +20,7 @@ public interface IOrderMapper extends BaseMapper<Orderform>{
 	 * @param u_id
 	 * @return
 	 */
-	List<Orderform> getAllOrder(String u_id);
+	List<ShoppingCar> getAllOrder(String u_id);
 	
 	/**
 	 * 删除指定订单功能

@@ -5,13 +5,15 @@
 <mapper namespace="com.harigroup.hypermarket.mapper.IOrderMapper">
 
 
-    <select id="getAllOrder" resultType="com.harigroup.hypermarket.pojo.Orderform">
-       select * from tb_orderform where u_id =#{u_id} order by order_time desc
+    <select id="getAllOrder" resultType="com.harigroup.hypermarket.pojo.ShoppingCar">
+       select *
+		from tb_orderform b,tb_goods g
+		where b.u_id=#{u_id} and b.g_id=g.g_id order by order_time desc
     </select>
 
 
     <insert id="releaseOrder" parameterType="com.harigroup.hypermarket.pojo.Orderform">
-         insert into tb_orderform values(default,#{u_id},#{g_id},#{order_time},#{o_number},#{price},#{pay_status})
+         insert into tb_orderform values(default,#{u_id},#{g_id},Now(),#{o_number},#{price},1)
     </insert> 
 
     

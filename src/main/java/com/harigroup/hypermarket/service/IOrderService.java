@@ -3,6 +3,7 @@ package com.harigroup.hypermarket.service;
 import java.util.List;
 
 import com.harigroup.hypermarket.pojo.Orderform;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
 
 /**
  * 订单相关的Service层操作
@@ -22,7 +23,7 @@ public interface IOrderService {
 	 * @param u_id
 	 * @return
 	 */
-	List<Orderform> getAllOrder(String u_id);
+	List<ShoppingCar> getAllOrder(String u_id);
 	
 	/**
 	 * 删除指定订单功能

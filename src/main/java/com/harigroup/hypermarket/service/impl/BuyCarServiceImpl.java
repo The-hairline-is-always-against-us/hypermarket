@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.harigroup.hypermarket.mapper.IBuyCarMapper;
 import com.harigroup.hypermarket.pojo.Goods;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
 import com.harigroup.hypermarket.service.IBuyCarService;
 
 @Service
@@ -41,7 +42,7 @@ public class BuyCarServiceImpl implements IBuyCarService {
 	}
 
 	@Override
-	public List<Goods> showBCGoods(int u_id) {
+	public List<ShoppingCar> showBCGoods(int u_id) {
 		return ibcMapper.showBCGoods(u_id);
 	}
 	

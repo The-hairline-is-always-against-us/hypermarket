@@ -142,7 +142,8 @@ public class GoodsController {
 	}
 
 	@PostMapping("/updateGoods")
-	public ResultMap updateGoods(@RequestParam("goods") Goods goods) {
+	public ResultMap updateGoods(@RequestParam("goods") String g) {
+		Goods goods = JSON.parseObject(g,Goods.class);
 		Integer updateGoods = goodsService.updateGoods(goods);
 		if (updateGoods > 0) {
 			return resultMap.success().message("修改成功");
@@ -152,7 +153,8 @@ public class GoodsController {
 	}
 
 	@PostMapping("/upGoods")
-	public ResultMap upGoods(@RequestParam("goods") Goods goods) {
+	public ResultMap upGoods(@RequestParam("goods") String g) {
+		Goods goods = JSON.parseObject(g,Goods.class);
 		Integer upGoods = goodsService.upGoods(goods);
 		if (upGoods > 0) {
 			return resultMap.success().message("上架成功");

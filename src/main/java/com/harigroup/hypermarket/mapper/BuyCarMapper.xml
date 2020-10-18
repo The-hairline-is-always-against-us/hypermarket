@@ -14,10 +14,10 @@
 
 	<!-- 展示购物车 -->
 	<select id="showBCGoods"
-		resultType="com.harigroup.hypermarket.pojo.Goods">
-		select g.*
+		resultType="com.harigroup.hypermarket.pojo.ShoppingCar">
+		select *
 		from tb_buycar b,tb_goods g
-		where b.u_id=#{u_id} and b.g_id=#{g_id}
+		where b.u_id=#{u_id} and b.g_id=g.g_id
 	</select>
 
 	<!-- 删除购物车中的商品 -->

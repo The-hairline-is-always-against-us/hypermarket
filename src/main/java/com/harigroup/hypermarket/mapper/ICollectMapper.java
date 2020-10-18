@@ -38,5 +38,5 @@ public interface ICollectMapper extends BaseMapper<Collect>{
 	 * @param g_id
 	 * @return
 	 */
-	Integer deleteCollectGoods(Integer g_id);
+	Integer deleteCollectGoods(Integer g_id,Integer u_id);
 }

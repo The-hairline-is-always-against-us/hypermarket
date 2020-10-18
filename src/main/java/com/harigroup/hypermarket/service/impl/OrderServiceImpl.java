@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.harigroup.hypermarket.mapper.IOrderMapper;
 import com.harigroup.hypermarket.pojo.Orderform;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
 import com.harigroup.hypermarket.service.IOrderService;
 
 /**
@@ -28,7 +29,7 @@ public class OrderServiceImpl implements IOrderService{
 	
 	
 	@Override
-	public List<Orderform> getAllOrder(String u_id){
+	public List<ShoppingCar> getAllOrder(String u_id){
 		// TODO Auto-generated method stub
 		return orderMapper.getAllOrder(u_id);
 	}

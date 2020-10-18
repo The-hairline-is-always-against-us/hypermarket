@@ -32,8 +32,8 @@ public class CollectServiceImpl implements ICollectService {
 	}
 
 	@Override
-	public Integer deleteCollectGoods(Integer g_id) {
-		return collectMapper.deleteCollectGoods(g_id);
+	public Integer deleteCollectGoods(Integer g_id,Integer u_id) {
+		return collectMapper.deleteCollectGoods(g_id,u_id);
 	}
 
 }

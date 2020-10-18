@@ -59,13 +59,13 @@ public class CollectionController {
 		 * @param u_id
 		 * @return
 		 */
-		@GetMapping("/collectall/{u_id}")
-		public List<Goods> collectGoods(@PathVariable("u_id") Integer u_id) {
-			List<Goods> showcollectGoods = collectService.showcollectGoods(u_id);
+		@GetMapping("/collectall")
+		public ResultMap collectGoods(@RequestHeader String token) {
+			List<Goods> showcollectGoods = collectService.showcollectGoods(JWTUtil.getUserID(token));
 			if (showcollectGoods.size() > 0) {
-				return showcollectGoods;
+				return resultMap.success().message(showcollectGoods);
 			} else {
-				return null;
+				return resultMap.fail().message("不存在收藏");
 			}
 		}
 		
@@ -75,8 +75,8 @@ public class CollectionController {
 		 * @return
 		 */
 		@GetMapping("/delete/{g_id}")
-		public ResultMap deleteCollectGoods(@PathVariable("g_id") Integer g_id) {
-			Integer dcg = collectService.deleteCollectGoods(g_id);
+		public ResultMap deleteCollectGoods(@PathVariable("g_id") Integer g_id,@RequestHeader String token) {
+			Integer dcg = collectService.deleteCollectGoods(g_id,JWTUtil.getUserID(token));
 			if(dcg>0) {
 				return resultMap.success().message("删除成功");
 			}else {

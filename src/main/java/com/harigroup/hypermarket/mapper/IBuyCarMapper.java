@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.harigroup.hypermarket.pojo.BuyCar;
 import com.harigroup.hypermarket.pojo.Goods;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
 
 public interface IBuyCarMapper {
 
@@ -26,7 +27,7 @@ public interface IBuyCarMapper {
 	 * @param u_id
 	 * @return
 	 */
-	List<Goods> showBCGoods(int u_id);
+	List<ShoppingCar> showBCGoods(int u_id);
 	
 	/**
 	 * 查询购物车中该商品的数量
@@ -48,5 +49,7 @@ public interface IBuyCarMapper {
 	 * @return
 	 */
 	Integer upBCGoods(Integer u_id,Integer g_id);
+	
+	
 
 }

@@ -1,14 +1,17 @@
 package com.harigroup.hypermarket.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
-import com.harigroup.hypermarket.pojo.BuyCar;
 import com.harigroup.hypermarket.pojo.ResultMap;
+import com.harigroup.hypermarket.pojo.ShoppingCar;
 import com.harigroup.hypermarket.service.IBuyCarService;
 import com.harigroup.hypermarket.utils.JWTUtil;
 
@@ -83,7 +86,17 @@ public class BuyCarController {
 				return resultMap.fail().message(addg);
 			}
 		}
+	}
+	
+	@GetMapping("/getShoppingCar")
+	public ResultMap getShoppingCar(@RequestHeader String token) {
+		List<ShoppingCar> showBCGoods = bcService.showBCGoods(JWTUtil.getUserID(token));
 
+		if (showBCGoods != null) {
+			return resultMap.success().message(showBCGoods);
+		} else {
+			return resultMap.fail().message(showBCGoods);
+		}
 	}
 
 }
