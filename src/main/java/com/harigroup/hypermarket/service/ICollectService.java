@@ -20,7 +20,7 @@ public interface ICollectService {
 	 * @return 数据库中存在的数量
 	 * @return 
 	 */
-	Integer validatecollectGoods(Integer g_id);
+	Integer validatecollectGoods(Integer g_id,Integer u_id);
 	
 	/**
 	 * 根据用户id展示收藏的商品

@@ -18,7 +18,7 @@
 		select count(*)
 		from
 		tb_collect as c
-		where c.g_id = #{g_id}
+		where c.g_id = #{g_id} and c.u_id = #{u_id}
 	</select>
 	
 	<!-- 展示收藏 -->

@@ -18,9 +18,9 @@
 	from tb_goods where g_name like "%"#{g_name}"%"
 </select>
 <select id="getGoodsByTName" resultType="com.harigroup.hypermarket.pojo.Goods">
-	SELECT g_name,g_intro,g_price,g_total,uptime,downtime,g_status,t_name,g_picture
+	SELECT g_id,g_name,g_intro,g_price,g_total,uptime,downtime,g_status,t_name,g_picture
 	FROM `tb_goods` as g,tb_type as t
-	where g.t_id=t.t_id and t.t_name=#{t_name}
+	where g.t_id=t.t_id and t.t_id=#{t_name}
 </select>
 <insert id="insertGoods">
 	insert into tb_goods values(default,#{t_id},#{s_id},#{g_name},#{g_intro},#{g_price},#{g_total},
@@ -40,8 +40,10 @@
 
 <select id="getGoodsBySID"
 		resultType="com.harigroup.hypermarket.pojo.Goods">
-		select * from tb_goods
-		where s_id = #{s_id}
+		resultType="com.harigroup.hypermarket.pojo.Goods">
+		select g.*,t.t_name,s.s_name 
+		from tb_goods g,tb_type t,tb_store s
+		where g.s_id=s.s_id and g.t_id=t.t_id and s.s_id =#{s_id} and g.g_status=1
 	</select>
 	<update id="updateGoods">
 		update tb_goods

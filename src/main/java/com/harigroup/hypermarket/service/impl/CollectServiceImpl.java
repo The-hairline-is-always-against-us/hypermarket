@@ -22,8 +22,8 @@ public class CollectServiceImpl implements ICollectService {
 	}
 
 	@Override
-	public Integer validatecollectGoods(Integer g_id) {
-		return collectMapper.validatecollectGoods(g_id);
+	public Integer validatecollectGoods(Integer g_id,Integer u_id) {
+		return collectMapper.validatecollectGoods(g_id,u_id);
 	}
 
 	@Override

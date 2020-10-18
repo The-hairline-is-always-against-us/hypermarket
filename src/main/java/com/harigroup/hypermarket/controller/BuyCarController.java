@@ -26,10 +26,13 @@ public class BuyCarController {
 	 */
 	@PostMapping("/addbuycar")
 	public ResultMap addbuycar(@RequestParam("g_id") String g_id, @RequestHeader String token) {
+		
+		Integer x1 = JWTUtil.getUserID(token);
+		Integer x2 = Integer.parseInt(g_id);
 
-		Integer fg = bcService.findGoods(JWTUtil.getUserID(token), Integer.valueOf(g_id));
+		Integer fg = bcService.findGoods(x1, x2);
 
-		if (fg > 0) {
+		if (fg != null && fg > 0) {
 			Integer upg = bcService.upBCGoods(JWTUtil.getUserID(token), Integer.valueOf(g_id));
 
 			if (upg > 0) {

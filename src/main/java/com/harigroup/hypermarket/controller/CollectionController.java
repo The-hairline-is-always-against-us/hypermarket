@@ -44,9 +44,9 @@ public class CollectionController {
 		 * @param g_id 商品ID
 		 * @return
 		 */
-		@GetMapping("/validateu/{g_id}")
-		public ResultMap validateUsername(@PathVariable("g_id") Integer g_id) {
-			Integer validatecollectGoods = collectService.validatecollectGoods(g_id);
+		@GetMapping("/validategoods/{g_id}")
+		public ResultMap validateUsername(@PathVariable("g_id") Integer g_id,@RequestHeader String token) {
+			Integer validatecollectGoods = collectService.validatecollectGoods(g_id,JWTUtil.getUserID(token));
 			if (validatecollectGoods > 0) {
 				return resultMap.fail().message("已收藏，别再重复收藏啦");
 			} else {

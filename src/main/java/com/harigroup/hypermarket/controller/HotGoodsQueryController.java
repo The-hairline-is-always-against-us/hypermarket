@@ -33,6 +33,6 @@ public class HotGoodsQueryController {
 	
 	@GetMapping("/topList")
 	public ResultMap topList() {
-		return null;
+		return resultMap.success().message(queryService.topList());
 	}
 }

@@ -24,7 +24,7 @@ public interface ICollectMapper extends BaseMapper<Collect>{
 	 * @param g_id
 	 * @return
 	 */
-	Integer validatecollectGoods(Integer g_id);
+	Integer validatecollectGoods(Integer g_id,Integer u_id);
 	
 	/**
 	 * 根据用户id展示收藏的商品
