@@ -39,3 +39,4 @@ mybatis-plus:
     map-underscore-to-camel-case: false
     call-setters-on-nulls: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+pagehelper:  helper-dialect: mysql

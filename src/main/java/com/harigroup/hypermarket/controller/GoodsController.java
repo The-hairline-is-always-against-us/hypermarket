@@ -2,16 +2,24 @@ package com.harigroup.hypermarket.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.harigroup.hypermarket.pojo.Goods;
 import com.harigroup.hypermarket.pojo.ResultMap;
 import com.harigroup.hypermarket.pojo.Type;
 import com.harigroup.hypermarket.service.IGoodsService;
+import com.harigroup.hypermarket.utils.MinioUtil;
+
+import io.minio.MinioClient;
 
 @RestController
 public class GoodsController {
@@ -26,6 +34,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getGoodsByTname")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getGoodsByTname(@RequestParam("t_name") String t_name) {
 		List<Goods> goods = goodsService.getGoodsByTName(t_name);
 		if(goods==null) {
@@ -40,8 +49,13 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getGoods")
-	public ResultMap getGoods() {
-		return resultMap.success().message(goodsService.getGoods());
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
+	public ResultMap getGoods(@RequestParam("pageNumber")String pageNumber,@RequestParam("pageSize") String pageSize) {
+		PageHelper.startPage(Integer.parseInt(pageNumber),Integer.parseInt(pageSize));
+		List<Goods> goods = goodsService.getGoods();
+		PageInfo<Goods> info = new PageInfo<>(goods);
+		return resultMap.success().message(goods).addElement("total", info.getTotal());
+		
 	}
 	
 	/**
@@ -50,6 +64,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getGoodsByGname")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getGoodsByGname(@RequestParam("g_name") String g_name) {
 		return resultMap.success().message(goodsService.getGoodsByGname(g_name));
 	}
@@ -60,6 +75,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getGoodsByGid")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getGoodsByGid(@RequestParam("g_id") String g_id) {
 		int gId=Integer.parseInt(g_id);
 		return resultMap.success().message(goodsService.getGoodsByGid(gId));
@@ -77,10 +93,14 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/insertGoods")
-	public ResultMap insertGoods(@RequestParam("goods") String goodStr) {
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
+	public ResultMap insertGoods(@RequestParam("goods") String goodStr,@RequestParam("file") MultipartFile file) {
 		Goods parseObject = JSON.parseObject(goodStr,Goods.class);
+		MinioUtil instance = MinioUtil.getInstance();
+		String upLoadFile = instance.upLoadFile(file);
+		parseObject.setG_picture(upLoadFile);
 		goodsService.insertGoods(parseObject);
-		return resultMap.success().message("");
+		return resultMap.success().message("添加成功！");
 	}
 	
 	/**
@@ -89,6 +109,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/deleteGoods")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap deleteGoods(@RequestParam("g_id") String g_id) {
 		int gId = Integer.parseInt(g_id);
 		Integer deleteGoods = goodsService.deleteGoods(gId);
@@ -106,6 +127,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getType")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getType() {
 		List<Type> type = goodsService.getType();
 		if(type==null) {
@@ -121,6 +143,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/deleteGoodsByGid")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap deleteGoodsByGid(@RequestParam("g_id") String g_id) {
 		int gId=Integer.parseInt(g_id);
 		Integer deleteGoodsByGid = goodsService.deleteGoodsByGid(gId);
@@ -132,6 +155,7 @@ public class GoodsController {
 	}
 	
 	@PostMapping("/getGoodsBySID")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getGoodsBySID(@RequestParam("s_id") String s_id) {
 		List<Goods> goodsBySID = goodsService.getGoodsBySID(Integer.valueOf(s_id));
 		if (goodsBySID.size() > 0) {
@@ -142,6 +166,7 @@ public class GoodsController {
 	}
 
 	@PostMapping("/updateGoods")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap updateGoods(@RequestParam("goods") String g) {
 		Goods goods = JSON.parseObject(g,Goods.class);
 		Integer updateGoods = goodsService.updateGoods(goods);
@@ -153,6 +178,7 @@ public class GoodsController {
 	}
 
 	@PostMapping("/upGoods")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap upGoods(@RequestParam("goods") String g) {
 		Goods goods = JSON.parseObject(g,Goods.class);
 		Integer upGoods = goodsService.upGoods(goods);
@@ -164,6 +190,7 @@ public class GoodsController {
 	}
 
 	@PostMapping("/downGoods")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap downGoods(@RequestParam("g_id") String g_id) {
 		Integer downGoods = goodsService.downGoods(Integer.valueOf(g_id));
 		if (downGoods > 0) {

@@ -1,5 +1,10 @@
 package com.harigroup.hypermarket.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.harigroup.hypermarket.pojo.ResultMap;
+import com.harigroup.hypermarket.pojo.User;
 import com.harigroup.hypermarket.service.IRootAdminService;
 
 /**
@@ -31,9 +39,13 @@ public class RootAdminController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/getAllUser")
-	public ResultMap getAllUser() {
-		return resultMap.success().message(rootService.getAllUser());
+	@GetMapping("/getAllUser/{pageIndex}/{pageSize}")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
+	public ResultMap getAllUser(@PathVariable String pageIndex,@PathVariable String pageSize) {
+		PageHelper.startPage(Integer.parseInt(pageIndex),Integer.parseInt(pageSize));
+		List<User> allUser = rootService.getAllUser();
+		PageInfo<User> page = new PageInfo<>(allUser);
+		return resultMap.success().message(allUser).addElement("total", page.getTotal());
 	}
 
 	/**
@@ -43,6 +55,7 @@ public class RootAdminController {
 	 * @return
 	 */
 	@GetMapping("/getClassify/{calssify}")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
 	public ResultMap getClassifyUser(@PathVariable String calssify) {
 		return resultMap.success().message(rootService.getClassifyUser(calssify));
 	}
@@ -54,6 +67,7 @@ public class RootAdminController {
 	 * @return
 	 */
 	@GetMapping("/deleteUser/{username}")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
 	public ResultMap deleteUser(@PathVariable String username) {
 		return resultMap.success().message(rootService.deleteUser(username));
 	}
@@ -65,6 +79,7 @@ public class RootAdminController {
 	 * @return
 	 */
 	@GetMapping("/unDeleteUser/{username}")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
 	public ResultMap unDeleteUser(@PathVariable String username) {
 		return resultMap.success().message(rootService.unDeleteUser(username));
 	}
@@ -76,13 +91,18 @@ public class RootAdminController {
 	 * @return
 	 */
 	@PostMapping("/changeRole")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
 	public ResultMap changeRole(@RequestParam("username") String username, @RequestParam("role") String role) {
 		return resultMap.success().message(rootService.changeRole(username, role));
 	}
 	
-	@GetMapping("/getAdminUserList")
-	public ResultMap getAdminUserList() {
-		return resultMap.success().message(rootService.getAdminUserList());
+	@GetMapping("/getAdminUserList/{now}/{size}")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
+	public ResultMap getAdminUserList(@PathVariable String now,@PathVariable String size) {
+		PageHelper.startPage(Integer.parseInt(now),Integer.parseInt(size));
+		List<User> adminUserList = rootService.getAdminUserList();
+		PageInfo<User> info = new PageInfo<>(adminUserList);
+		return resultMap.success().message(adminUserList).addElement("total", info.getTotal());
 	}
 
 }

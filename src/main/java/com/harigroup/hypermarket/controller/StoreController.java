@@ -1,13 +1,20 @@
 package com.harigroup.hypermarket.controller;
 
+import java.util.List;
+
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.harigroup.hypermarket.pojo.ResultMap;
 import com.harigroup.hypermarket.pojo.Store;
 import com.harigroup.hypermarket.service.IStoreService;
@@ -28,6 +35,7 @@ public class StoreController {
 	 * @return
 	 */
 	@PostMapping("/applyStore")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap applyStore(@RequestParam("store") String s,@RequestHeader String token) {
 		Store store = JSON.parseObject(s,Store.class);
 		store.setU_id(JWTUtil.getUserID(token));
@@ -46,6 +54,7 @@ public class StoreController {
 	 * @return
 	 */
 	@PostMapping("/passApply")
+	@RequiresRoles(logical = Logical.OR, value = {"admin","root"})
 	public ResultMap passApply(@RequestParam("store") String s) {
 		Store store = JSON.parseObject(s,Store.class);
 		Integer applyStore = storeService.passApply(store);
@@ -62,6 +71,7 @@ public class StoreController {
 	 * @return
 	 */
 	@PostMapping("/getStoreByUid")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getStoreByUid(@RequestHeader("token") String token) {
 		Integer uId=JWTUtil.getUserID(token);
 	//public ResultMap getStoreByUid(@RequestParam("u_id") String u_id) {
@@ -75,6 +85,7 @@ public class StoreController {
 	 * @return
 	 */
 	@PostMapping("/getStoreBySid")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getStoreBySid(@RequestParam("s_id") String s_id) {
 		Integer sId=Integer.parseInt(s_id);
 		return resultMap.success().message(storeService.getStoreBySid(sId));
@@ -86,6 +97,7 @@ public class StoreController {
 	 * @return
 	 */
 	@PostMapping("/deleteStoreBySid")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap deleteStoreBySid(@RequestParam("s_id") String s_id) {
 		Integer sId=Integer.parseInt(s_id);
 		Integer deleteStore = storeService.deleteStore(sId);
@@ -95,13 +107,21 @@ public class StoreController {
 		return resultMap.fail().message("删除失败");
 	}
 	
-	@GetMapping("/getAllStore")
-	public ResultMap getAllStore() {
-		return resultMap.success().message(storeService.getAllStore());
+	@GetMapping("/getAllStore/{pageIndex}/{pageSize}")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
+	public ResultMap getAllStore(@PathVariable String pageIndex,@PathVariable String pageSize) {
+		PageHelper.startPage(Integer.parseInt(pageIndex),Integer.parseInt(pageSize));
+		List<Store> allStore = storeService.getAllStore();
+		PageInfo<Store> info = new PageInfo<>(allStore);
+		return resultMap.success().message(allStore).addElement("total", info.getTotal());
 	}
 	
-	@GetMapping("/getAllPStore")
-	public ResultMap getAllPStore() {
-		return resultMap.success().message(storeService.getAllPStore());
+	@GetMapping("/getAllPStore/{pageIndex}/{pageSize}")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
+	public ResultMap getAllPStore(@PathVariable String pageIndex,@PathVariable String pageSize) {
+		PageHelper.startPage(Integer.parseInt(pageIndex),Integer.parseInt(pageSize));
+		List<Store> allPStore = storeService.getAllPStore();
+		PageInfo<Store> info = new PageInfo<>(allPStore);
+		return resultMap.success().message(allPStore).addElement("total", info.getTotal());
 	}
 }

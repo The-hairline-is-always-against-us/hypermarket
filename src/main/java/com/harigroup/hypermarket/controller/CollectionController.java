@@ -2,6 +2,8 @@ package com.harigroup.hypermarket.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,7 @@ public class CollectionController {
 		 * @return
 		 */
 		@PostMapping("/collect")
+		@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 		public ResultMap collect(@RequestParam("collect") String collect,@RequestHeader String token) {
 			Collect parseObject = JSON.parseObject(collect,Collect.class);
 			parseObject.setU_id(JWTUtil.getUserID(token));
@@ -45,6 +48,7 @@ public class CollectionController {
 		 * @return
 		 */
 		@GetMapping("/validategoods/{g_id}")
+		@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 		public ResultMap validateUsername(@PathVariable("g_id") Integer g_id,@RequestHeader String token) {
 			Integer validatecollectGoods = collectService.validatecollectGoods(g_id,JWTUtil.getUserID(token));
 			if (validatecollectGoods > 0) {
@@ -60,6 +64,7 @@ public class CollectionController {
 		 * @return
 		 */
 		@GetMapping("/collectall")
+		@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 		public ResultMap collectGoods(@RequestHeader String token) {
 			List<Goods> showcollectGoods = collectService.showcollectGoods(JWTUtil.getUserID(token));
 			if (showcollectGoods.size() > 0) {
@@ -75,6 +80,7 @@ public class CollectionController {
 		 * @return
 		 */
 		@GetMapping("/delete/{g_id}")
+		@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 		public ResultMap deleteCollectGoods(@PathVariable("g_id") Integer g_id,@RequestHeader String token) {
 			Integer dcg = collectService.deleteCollectGoods(g_id,JWTUtil.getUserID(token));
 			if(dcg>0) {

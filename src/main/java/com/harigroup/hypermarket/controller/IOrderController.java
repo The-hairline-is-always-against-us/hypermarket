@@ -2,6 +2,8 @@ package com.harigroup.hypermarket.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +44,7 @@ public class IOrderController {
 	 * @return
 	 */
 	@GetMapping("/selectOrders")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap selectOrders(@RequestHeader String token) {
 		int u_id = JWTUtil.getUserID(token);
 		
@@ -58,6 +61,7 @@ public class IOrderController {
 	 * @return
 	 */
 	@PostMapping("/releaseOrders")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap releaseOrders(@RequestParam("order") String order,@RequestHeader String token) {
 		ShoppingCar parseObject = JSON.parseObject(order,ShoppingCar.class);
 		Orderform orderform = new Orderform();
@@ -77,6 +81,7 @@ public class IOrderController {
 	 * @return
 	 */
 	@PostMapping("/delOrderById")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap delOrderById(@RequestParam("o_id") String o_id, @RequestHeader String token ) {
 		Integer oId=Integer.parseInt(o_id);
 		Integer order = orderService.delOrderById(oId);

@@ -2,8 +2,9 @@ package com.harigroup.hypermarket.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,6 +29,7 @@ public class BuyCarController {
 	 * 将商品加入购物车
 	 */
 	@PostMapping("/addbuycar")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap addbuycar(@RequestParam("g_id") String g_id, @RequestHeader String token) {
 		
 		Integer x1 = JWTUtil.getUserID(token);
@@ -63,6 +65,7 @@ public class BuyCarController {
 	 * @return
 	 */
 	@PostMapping("/deletebuycar")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap deleteGoods(@RequestParam("g_id") String g_id, @RequestHeader String token) {
 
 		Integer fg = bcService.findGoods(JWTUtil.getUserID(token), Integer.valueOf(g_id));
@@ -89,6 +92,7 @@ public class BuyCarController {
 	}
 	
 	@GetMapping("/getShoppingCar")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getShoppingCar(@RequestHeader String token) {
 		List<ShoppingCar> showBCGoods = bcService.showBCGoods(JWTUtil.getUserID(token));
 
@@ -100,6 +104,7 @@ public class BuyCarController {
 	}
 	
 	@PostMapping("/updateBCNumber")
+	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap updateBCGoodsNumber(@RequestHeader String token,@RequestParam("g_id") String g_id,
 			@RequestParam("c_id") String c_id,@RequestParam("c_number") String c_number) {
 		bcService.updateBCGoodsNumber(Integer.parseInt(g_id), Integer.parseInt(c_id), 
