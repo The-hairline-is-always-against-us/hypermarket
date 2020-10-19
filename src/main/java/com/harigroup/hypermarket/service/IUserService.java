@@ -57,4 +57,5 @@ public interface IUserService {
 	 */
 	Integer validatePhone(String phone);
 	
+	Integer jiHuo(String u_id);
 }

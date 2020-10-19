@@ -45,6 +45,12 @@ public class BuyCarServiceImpl implements IBuyCarService {
 	public List<ShoppingCar> showBCGoods(int u_id) {
 		return ibcMapper.showBCGoods(u_id);
 	}
+
+	@Override
+	public Integer updateBCGoodsNumber(Integer g_id, Integer c_id, Integer u_id, Integer c_number) {
+		// TODO Auto-generated method stub
+		return ibcMapper.updateBCGoodsNumber(g_id, c_id, u_id, c_number);
+	}
 	
 	
 

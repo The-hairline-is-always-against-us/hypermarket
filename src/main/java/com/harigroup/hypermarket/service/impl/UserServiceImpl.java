@@ -56,4 +56,10 @@ public class UserServiceImpl implements IUserService {
 		return userMapper.validatePhone(phone);
 	}
 
+	@Override
+	public Integer jiHuo(String u_id) {
+		// TODO Auto-generated method stub
+		return userMapper.jiHuo(u_id);
+	}
+
 }

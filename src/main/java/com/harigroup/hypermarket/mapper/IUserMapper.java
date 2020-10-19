@@ -56,4 +56,6 @@ public interface IUserMapper extends BaseMapper<User> {
 	 */
 	Integer validatePhone(String phone);
 	
+	Integer jiHuo(String u_id);
+	
 }

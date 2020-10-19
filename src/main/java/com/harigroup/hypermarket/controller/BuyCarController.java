@@ -98,5 +98,13 @@ public class BuyCarController {
 			return resultMap.fail().message(showBCGoods);
 		}
 	}
+	
+	@PostMapping("/updateBCNumber")
+	public ResultMap updateBCGoodsNumber(@RequestHeader String token,@RequestParam("g_id") String g_id,
+			@RequestParam("c_id") String c_id,@RequestParam("c_number") String c_number) {
+		bcService.updateBCGoodsNumber(Integer.parseInt(g_id), Integer.parseInt(c_id), 
+				JWTUtil.getUserID(token), Integer.parseInt(c_number));
+		return resultMap.success().message("");
+	}
 
 }

@@ -48,5 +48,11 @@
 		where u_id=#{u_id} and g_id=#{g_id}
 	</update>
 	
+	<update id="updateBCGoodsNumber">
+		update tb_buycar 
+		set c_number = #{c_number} 
+		where u_id=#{u_id} and g_id=#{g_id} and c_id = #{c_id}
+	</update>
+	
 
 </mapper>

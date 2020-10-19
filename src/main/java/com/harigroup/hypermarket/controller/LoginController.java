@@ -49,6 +49,11 @@ public class LoginController {
 		User user = userService.login(username, Md5Encoding.md5FixSaltEncode(password));
 
 		if (user != null) {
+			
+			if (user.getBan() != null && user.getBan() == 1) {
+				return resultMap.fail().code(201).message("请前往邮箱激活用户后进行登录");
+			}
+			
 			if (redisUtil.hasKey(user.getUsername())) {
 				redisUtil.del(user.getUsername());
 			}

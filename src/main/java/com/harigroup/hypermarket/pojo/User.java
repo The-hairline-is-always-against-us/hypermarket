@@ -33,4 +33,5 @@ public class User {
 	//备用字段内部封装，用于统一获取权限具体内容
 	@TableField(exist = false)
 	private Role role;
+	private String confirmPass;
 }

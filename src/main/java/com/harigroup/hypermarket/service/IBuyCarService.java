@@ -50,6 +50,8 @@ public interface IBuyCarService {
 	 * @return
 	 */
 	Integer upBCGoods(Integer u_id,Integer g_id);
+	
+	Integer updateBCGoodsNumber(Integer g_id,Integer c_id,Integer u_id,Integer c_number);
 
 	
 }
