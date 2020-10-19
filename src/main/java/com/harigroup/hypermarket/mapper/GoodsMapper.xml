@@ -40,7 +40,6 @@
 
 <select id="getGoodsBySID"
 		resultType="com.harigroup.hypermarket.pojo.Goods">
-		resultType="com.harigroup.hypermarket.pojo.Goods">
 		select g.*,t.t_name,s.s_name 
 		from tb_goods g,tb_type t,tb_store s
 		where g.s_id=s.s_id and g.t_id=t.t_id and s.s_id =#{s_id} and g.g_status=1

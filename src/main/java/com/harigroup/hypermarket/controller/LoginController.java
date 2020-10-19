@@ -15,6 +15,7 @@ import com.harigroup.hypermarket.pojo.ResultMap;
 import com.harigroup.hypermarket.pojo.User;
 import com.harigroup.hypermarket.service.IUserService;
 import com.harigroup.hypermarket.utils.JWTUtil;
+import com.harigroup.hypermarket.utils.Md5Encoding;
 import com.harigroup.hypermarket.utils.RedisUtil;
 
 /**
@@ -45,7 +46,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public ResultMap login(@RequestParam("username") String username, @RequestParam("password") String password) {
 
-		User user = userService.login(username, password);
+		User user = userService.login(username, Md5Encoding.md5FixSaltEncode(password));
 
 		if (user != null) {
 			if (redisUtil.hasKey(user.getUsername())) {

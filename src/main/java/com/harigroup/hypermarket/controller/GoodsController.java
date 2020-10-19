@@ -135,7 +135,7 @@ public class GoodsController {
 	public ResultMap getGoodsBySID(@RequestParam("s_id") String s_id) {
 		List<Goods> goodsBySID = goodsService.getGoodsBySID(Integer.valueOf(s_id));
 		if (goodsBySID.size() > 0) {
-			return resultMap.success().message("");
+			return resultMap.success().message(goodsBySID);
 		} else {
 			return resultMap.fail().message("该店铺暂时没有商品");
 		}
