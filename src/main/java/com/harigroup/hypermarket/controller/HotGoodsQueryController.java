@@ -29,13 +29,11 @@ public class HotGoodsQueryController {
 	 * @return
 	 */
 	@GetMapping("/hotGoodsQuery")
-	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap hotGoodsQuery() {
 		return resultMap.success().message(queryService.hotGoodsQuery());
 	}
 	
 	@GetMapping("/topList")
-	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap topList() {
 		return resultMap.success().message(queryService.topList());
 	}

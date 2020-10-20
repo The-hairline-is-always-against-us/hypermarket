@@ -34,7 +34,6 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getGoodsByTname")
-	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getGoodsByTname(@RequestParam("t_name") String t_name) {
 		List<Goods> goods = goodsService.getGoodsByTName(t_name);
 		if(goods==null) {
@@ -49,7 +48,6 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getGoods")
-	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getGoods(@RequestParam("pageNumber")String pageNumber,@RequestParam("pageSize") String pageSize) {
 		PageHelper.startPage(Integer.parseInt(pageNumber),Integer.parseInt(pageSize));
 		List<Goods> goods = goodsService.getGoods();
@@ -127,7 +125,6 @@ public class GoodsController {
 	 * @return
 	 */
 	@PostMapping("/getType")
-	@RequiresRoles(logical = Logical.OR, value = {"user","admin","solder","root"})
 	public ResultMap getType() {
 		List<Type> type = goodsService.getType();
 		if(type==null) {
